@@ -9,7 +9,9 @@ function fromJSONDate(jsonDate) {
 
 function toJSONDate(dateString) {
   if (dateString) {
-    return new Date(dateString).toJSON();
+    // return new Date(dateString).toJSON();
+    // use local date time
+    return new Date(dateString).toString();
   }
 }
 
@@ -27,7 +29,7 @@ function DateTimeWidget(props) {
 
 if (process.env.NODE_ENV !== "production") {
   DateTimeWidget.propTypes = {
-    value: PropTypes.string,
+    value: PropTypes.string
   };
 }
 

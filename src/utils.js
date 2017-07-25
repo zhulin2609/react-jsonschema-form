@@ -6,7 +6,7 @@ const widgetMap = {
     checkbox: "CheckboxWidget",
     radio: "RadioWidget",
     select: "SelectWidget",
-    hidden: "HiddenWidget",
+    hidden: "HiddenWidget"
   },
   string: {
     text: "TextWidget",
@@ -27,7 +27,7 @@ const widgetMap = {
     "alt-date": "AltDateWidget",
     "alt-datetime": "AltDateTimeWidget",
     color: "ColorWidget",
-    file: "FileWidget",
+    file: "FileWidget"
   },
   number: {
     text: "TextWidget",
@@ -35,7 +35,7 @@ const widgetMap = {
     updown: "UpDownWidget",
     range: "RangeWidget",
     radio: "RadioWidget",
-    hidden: "HiddenWidget",
+    hidden: "HiddenWidget"
   },
   integer: {
     text: "TextWidget",
@@ -43,13 +43,13 @@ const widgetMap = {
     updown: "UpDownWidget",
     range: "RangeWidget",
     radio: "RadioWidget",
-    hidden: "HiddenWidget",
+    hidden: "HiddenWidget"
   },
   array: {
     select: "SelectWidget",
     checkboxes: "CheckboxesWidget",
-    files: "FileWidget",
-  },
+    files: "FileWidget"
+  }
 };
 
 export function getDefaultRegistry() {
@@ -57,7 +57,7 @@ export function getDefaultRegistry() {
     fields: require("./components/fields").default,
     widgets: require("./components/widgets").default,
     definitions: {},
-    formContext: {},
+    formContext: {}
   };
 }
 
@@ -179,7 +179,7 @@ export function getUiOptions(uiSchema) {
         return {
           ...options,
           ...(value.options || {}),
-          widget: value.component,
+          widget: value.component
         };
       }
       if (key === "ui:options" && isObject(value)) {
@@ -480,7 +480,7 @@ export function shouldRender(comp, nextProps, nextState) {
 
 export function toIdSchema(schema, id, definitions) {
   const idSchema = {
-    $id: id || "root",
+    $id: id || "root"
   };
   if ("$ref" in schema) {
     const _schema = retrieveSchema(schema, definitions);
@@ -508,20 +508,28 @@ export function parseDateString(dateString, includeTime = true) {
       day: -1,
       hour: includeTime ? -1 : 0,
       minute: includeTime ? -1 : 0,
-      second: includeTime ? -1 : 0,
+      second: includeTime ? -1 : 0
     };
   }
   const date = new Date(dateString);
   if (Number.isNaN(date.getTime())) {
     throw new Error("Unable to parse date " + dateString);
   }
-  return {
+  /*return {
     year: date.getUTCFullYear(),
     month: date.getUTCMonth() + 1, // oh you, javascript.
     day: date.getUTCDate(),
     hour: includeTime ? date.getUTCHours() : 0,
     minute: includeTime ? date.getUTCMinutes() : 0,
     second: includeTime ? date.getUTCSeconds() : 0,
+  };*/
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1, // oh you, javascript.
+    day: date.getDate(),
+    hour: includeTime ? date.getHours() : 0,
+    minute: includeTime ? date.getMinutes() : 0,
+    second: includeTime ? date.getSeconds() : 0
   };
 }
 
@@ -529,8 +537,10 @@ export function toDateString(
   { year, month, day, hour = 0, minute = 0, second = 0 },
   time = true
 ) {
-  const utcTime = Date.UTC(year, month - 1, day, hour, minute, second);
-  const datetime = new Date(utcTime).toJSON();
+  /*const utcTime = Date.UTC(year, month - 1, day, hour, minute, second);
+  const datetime = new Date(utcTime).toJSON();*/
+  const localTime = new Date(year, month - 1, day, hour, minute, second);
+  const datetime = new Date(localTime).toJSON();
   return time ? datetime : datetime.slice(0, 10);
 }
 
